@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e64df02589464614287c82c126c2e29d, type: 3}
   m_Name: ExamplePalette
   m_EditorClassIdentifier: 
+  Dimensions: {x: 25, y: 16}
   FloorTiles:
-  - {fileID: 11400000, guid: 226c6de5e5f201f4289da09eb0f4c06e, type: 2}
+  - {fileID: 11400000, guid: 08de0a5862b5ab14d8641f5f6d71259f, type: 2}
