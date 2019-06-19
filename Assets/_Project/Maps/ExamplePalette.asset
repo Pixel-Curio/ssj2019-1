@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: ExamplePalette
   m_EditorClassIdentifier: 
   Dimensions: {x: 25, y: 16}
+  WallTiles: []
   FloorTiles:
-  - {fileID: 11400000, guid: 08de0a5862b5ab14d8641f5f6d71259f, type: 2}
+  - {fileID: 11400000, guid: bf61a1d582955b042af9f58020b21460, type: 2}
