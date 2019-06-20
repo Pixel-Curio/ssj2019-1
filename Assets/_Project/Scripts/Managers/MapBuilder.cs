@@ -8,20 +8,30 @@ namespace PixelCurio.OccultClassic
     {
         [Inject(Id = "BaseLayer")] private readonly Tilemap _baseLayer;
         [Inject(Id = "WallLayer")] private readonly Tilemap _wallLayer;
-        [Inject(Id = "DefaultPalette")] private readonly MapPalette _defaultPalette;
+        [Inject(Id = "DecorationLayer")] private readonly Tilemap _decorationLayer;
+        [Inject(Id = "ObjectLayer")] private readonly Tilemap _objectLayer;
+        [Inject(Id = "DefaultMap")] private readonly Map _defaultMap;
 
         public void Initialize()
         {
             Debug.Log("MapBuilder initializing.");
 
-            for (int y = 0; y < _defaultPalette.Dimensions.y; y++)
-                for (int x = 0; x < _defaultPalette.Dimensions.x; x++)
+            for (int y = 0; y < _defaultMap.Dimensions.y; y++)
+                for (int x = 0; x < _defaultMap.Dimensions.x; x++)
                 {
-                    if (x == 0 || x >= _defaultPalette.Dimensions.x - 1 ||
-                        y == 0 || y >= _defaultPalette.Dimensions.y - 1)
-                        _wallLayer.SetTile(new Vector3Int(x, y, 0), _defaultPalette.WallTiles[Random.Range(0, _defaultPalette.WallTiles.Count)]);
+                    if (x == 0 || x >= _defaultMap.Dimensions.x - 1 ||
+                        y == 0 || y >= _defaultMap.Dimensions.y - 1)
+                        _wallLayer.SetTile(new Vector3Int(x, y, 0), _defaultMap.WallTiles[Random.Range(0, _defaultMap.WallTiles.Count)]);
 
-                    _baseLayer.SetTile(new Vector3Int(x, y, 0), _defaultPalette.FloorTiles[0]);
+                    _baseLayer.SetTile(new Vector3Int(x, y, 0), _defaultMap.FloorTiles[0]);
+
+                    if (Random.value < _defaultMap.DecorationChance)
+                        _decorationLayer.SetTile(new Vector3Int(x, y, 0),
+                            _defaultMap.DecorationTiles[Random.Range(0, _defaultMap.DecorationTiles.Count)]);
+
+                    if (Random.value < _defaultMap.ObjectChance)
+                        _objectLayer.SetTile(new Vector3Int(x, y, 0),
+                            _defaultMap.ObjectTiles[Random.Range(0, _defaultMap.ObjectTiles.Count)]);
                 }
         }
     }

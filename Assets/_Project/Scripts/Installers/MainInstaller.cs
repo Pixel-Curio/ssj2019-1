@@ -6,11 +6,11 @@ namespace PixelCurio.OccultClassic
 {
     public class MainInstaller : MonoInstaller
     {
-        [SerializeField] private MapPalette _defaultPalette;
+        [SerializeField] private Map _defaultMap;
 
         public override void InstallBindings()
         {
-            Container.Bind<MapPalette>().WithId("DefaultPalette").FromInstance(_defaultPalette).AsSingle();
+            Container.Bind<Map>().WithId("DefaultMap").FromInstance(_defaultMap).AsSingle();
             Container.BindInterfacesAndSelfTo<MapBuilder>().AsSingle().NonLazy();
         }
     }

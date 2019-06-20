@@ -10,12 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e64df02589464614287c82c126c2e29d, type: 3}
-  m_Name: ExamplePalette
+  m_Name: ExampleMap
   m_EditorClassIdentifier: 
   Dimensions: {x: 25, y: 16}
+  DecorationChance: 0.03
+  ObjectChance: 0.03
   WallTiles:
   - {fileID: 11400000, guid: ff521b3ba03991e429759f550320aee2, type: 2}
   - {fileID: 11400000, guid: eab4291761147ad489fdb66fc8a31309, type: 2}
   - {fileID: 11400000, guid: fd28c8cba81ebbd409437884fa3dcf24, type: 2}
   FloorTiles:
   - {fileID: 11400000, guid: bf61a1d582955b042af9f58020b21460, type: 2}
+  DecorationTiles:
+  - {fileID: 11400000, guid: 4427e4c77c0abd14dba6de9778a76083, type: 2}
+  - {fileID: 11400000, guid: a65f5c2c1722f6f42bdec6d67fb06893, type: 2}
+  ObjectTiles:
+  - {fileID: 11400000, guid: ff6ab5f59d126da4192c23d8fbc17c24, type: 2}
+  - {fileID: 11400000, guid: c03f60bcd177f6e4397c34451e372d3c, type: 2}
+  - {fileID: 11400000, guid: d400a4fb97a42ca4f9f73f943aac54af, type: 2}
+  - {fileID: 11400000, guid: bd936df43cba45a43a041c7f57ff5eb3, type: 2}
+  - {fileID: 11400000, guid: 8775d56f094865e4788415be227afff0, type: 2}
+  - {fileID: 11400000, guid: 4a149d0b29a2b914a99e4ca9ee3a6860, type: 2}
