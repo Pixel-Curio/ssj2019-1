@@ -19,7 +19,7 @@ namespace PixelCurio.OccultClassic
                 {
                     if (x == 0 || x >= _defaultPalette.Dimensions.x - 1 ||
                         y == 0 || y >= _defaultPalette.Dimensions.y - 1)
-                        _wallLayer.SetTile(new Vector3Int(x, y, 0), _defaultPalette.WallTiles[0]);
+                        _wallLayer.SetTile(new Vector3Int(x, y, 0), _defaultPalette.WallTiles[Random.Range(0, _defaultPalette.WallTiles.Count)]);
 
                     _baseLayer.SetTile(new Vector3Int(x, y, 0), _defaultPalette.FloorTiles[0]);
                 }

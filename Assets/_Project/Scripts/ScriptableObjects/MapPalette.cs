@@ -8,7 +8,7 @@ namespace PixelCurio.OccultClassic
     public class MapPalette : ScriptableObject
     {
         public Vector2 Dimensions;
-        public List<Tile> WallTiles;
-        public List<Tile> FloorTiles;
+        public List<TileBase> WallTiles;
+        public List<TileBase> FloorTiles;
     }
 }
