@@ -1,28 +1,24 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace PixelCurio.OccultClassic
 {
-    public class PlayableCharacter : MonoBehaviour
+    public class Bat : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Animator _animator;
         [SerializeField] private Vector2 _movementSpeed;
+        [Inject] private PlayableCharacter _target;
 
         private void FixedUpdate()
         {
             Vector2 offset = Vector2.zero;
 
-            if (Input.GetKey(KeyCode.A)) offset += Vector2.left;
-            if (Input.GetKey(KeyCode.D)) offset += Vector2.right;
-            if (Input.GetKey(KeyCode.W)) offset += Vector2.up;
-            if (Input.GetKey(KeyCode.S)) offset += Vector2.down;
-
-            offset = offset.normalized * _movementSpeed;
+            offset = (_target.transform.position - transform.position).normalized * _movementSpeed;
 
             _rigidbody.MovePosition(_rigidbody.position + offset * Time.fixedDeltaTime);
 
             _animator.SetFloat("HorizontalSpeed", offset.x);
-            _animator.SetFloat("VerticalSpeed", offset.y);
         }
     }
 }
