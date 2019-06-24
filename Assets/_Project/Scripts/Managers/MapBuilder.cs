@@ -105,6 +105,16 @@ namespace PixelCurio.OccultClassic
                     if (IsWall(map, x, y))
                         _wallLayer.SetTile(new Vector3Int(x, y, 0),
                             _defaultMap.WallTiles[Random.Range(0, _defaultMap.WallTiles.Count)]);
+                    else if (map[x, y] != 0)
+                    {
+                        if (Random.value < _defaultMap.DecorationChance)
+                            _decorationLayer.SetTile(new Vector3Int(x, y, 0),
+                                _defaultMap.DecorationTiles[Random.Range(0, _defaultMap.DecorationTiles.Count)]);
+
+                        if (Random.value < _defaultMap.ObjectChance)
+                            _objectLayer.SetTile(new Vector3Int(x, y, 0),
+                                _defaultMap.ObjectTiles[Random.Range(0, _defaultMap.ObjectTiles.Count)]);
+                    }
                 }
 
         }
