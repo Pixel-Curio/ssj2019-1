@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
@@ -34,25 +33,32 @@ namespace PixelCurio.OccultClassic
 
         private void AStarMap()
         {
-            (int x, int y) maxMapSize = (64, 64);
-            (int x, int y) minRoomSize = (5, 5);
-            (int x, int y) maxRoomSize = (25, 25);
-            const int maxRoomCount = 50;
-            const int maxFailedRoomCount = 1000;
+            Vector2 maxMapSize = _defaultMap.MaxMapSize;
+            Vector2 minRoomSize = _defaultMap.MinRoomSize;
+            Vector2 maxRoomSize = _defaultMap.MaxRoomSize;
+            int maxRoomCount = _defaultMap.MaxRoomCount;
+            int maxFailedRoomCount = _defaultMap.MaxFailedRoomCount;
             int failedRoomCount = 0;
             List<Room> rooms = new List<Room>();
 
-            //Add first room.
-            rooms.Add(new Room { X = 1, Y = 1, Width = Random.Range(1, maxRoomSize.x), Height = Random.Range(1, maxRoomSize.y) });
+            //Use provided seed if it exists.
+            int seed = Random.Range(0, int.MaxValue);
+            if(_defaultMap.MapSeed != 0) seed = _defaultMap.MapSeed;
+            Random.InitState(seed);
+            Debug.Log($"Dungeon seed: {seed}");
 
+            //Add first room.
+            rooms.Add(new Room { X = 1, Y = 1, Width = Random.Range(1, (int)maxRoomSize.x), Height = Random.Range(1, (int)maxRoomSize.y) });
+
+            //Generate non-overlapping rooms.
             while (rooms.Count < maxRoomCount && failedRoomCount < maxFailedRoomCount)
             {
                 Room room = new Room
                 {
-                    X = Random.Range(1, maxMapSize.x),
-                    Y = Random.Range(1, maxMapSize.y),
-                    Width = Random.Range(minRoomSize.x, maxRoomSize.x),
-                    Height = Random.Range(minRoomSize.y, maxRoomSize.y)
+                    X = Random.Range(1, (int)maxMapSize.x),
+                    Y = Random.Range(1, (int)maxMapSize.y),
+                    Width = Random.Range((int)minRoomSize.x, (int)maxRoomSize.x),
+                    Height = Random.Range((int)minRoomSize.y, (int)maxRoomSize.y)
                 };
 
                 bool didOverlap = false;
@@ -80,8 +86,9 @@ namespace PixelCurio.OccultClassic
 
             Debug.Log($"Final room count: {rooms.Count}");
 
-            int[,] map = new int[maxMapSize.x, maxMapSize.y];
+            int[,] map = new int[(int)maxMapSize.x, (int)maxMapSize.y];
 
+            //Add rooms to map.
             foreach (Room room in rooms)
             {
                 for (int y = 0; y < room.Height; y++)
@@ -91,10 +98,22 @@ namespace PixelCurio.OccultClassic
                     }
             }
 
+            //Create paths between rooms.
             foreach (Room room in rooms)
             {
                 map = CreatePath(map, room, rooms[Random.Range(0, rooms.Count)]);
             }
+
+            //Remove unnecessary walls.
+            for (int y = 0; y < maxMapSize.y; y++)
+                for (int x = 0; x < maxMapSize.x; x++)
+                {
+                    if ((x + 1 < maxMapSize.x && map[x + 1, y] != 0) &&
+                        (y + 1 < maxMapSize.y && map[x, y + 1] != 0) &&
+                        (x - 1 >= 0 && map[x - 1, y] != 0) &&
+                        (y - 1 >= 0 && map[x, y - 1] != 0))
+                        map[x, y] = 1;
+                }
 
             for (int y = 0; y < maxMapSize.y; y++)
                 for (int x = 0; x < maxMapSize.x; x++)
@@ -103,8 +122,10 @@ namespace PixelCurio.OccultClassic
                         _baseLayer.SetTile(new Vector3Int(x, y, 0), _defaultMap.FloorTiles[0]);
 
                     if (IsWall(map, x, y))
+                    {
                         _wallLayer.SetTile(new Vector3Int(x, y, 0),
                             _defaultMap.WallTiles[Random.Range(0, _defaultMap.WallTiles.Count)]);
+                    }
                     else if (map[x, y] != 0)
                     {
                         if (Random.value < _defaultMap.DecorationChance)
@@ -123,10 +144,10 @@ namespace PixelCurio.OccultClassic
         {
             if (map[x, y] != 0) return false;
 
-            if (x + 1 >= map.GetLength(0) || map[x + 1, y] != 0) return true;
-            if (y + 1 >= map.GetLength(1) || map[x, y + 1] != 0) return true;
-            if (x - 1 < 0 || map[x - 1, y] != 0) return true;
-            if (y - 1 < 0 || map[x, y - 1] != 0) return true;
+            if (x + 1 < map.GetLength(0) && map[x + 1, y] != 0) return true;
+            if (y + 1 < map.GetLength(1) && map[x, y + 1] != 0) return true;
+            if (x - 1 >= 0 && map[x - 1, y] != 0) return true;
+            if (y - 1 >= 0 && map[x, y - 1] != 0) return true;
 
             return false;
         }
@@ -246,34 +267,6 @@ namespace PixelCurio.OccultClassic
             int y2Prime = room2.Y + room2.Height;
 
             return (x2Prime >= x1 && x1Prime <= x2) && (y2Prime >= y1 && y1Prime <= y2);
-        }
-
-        private void BasicMap()
-        {
-            for (int y = 0; y < _defaultMap.Dimensions.y; y++)
-                for (int x = 0; x < _defaultMap.Dimensions.x; x++)
-                {
-                    //If it's a wall, create a wall tile.
-                    if (x == 0 || x >= _defaultMap.Dimensions.x - 1 ||
-                        y == 0 || y >= _defaultMap.Dimensions.y - 1)
-                    {
-                        _wallLayer.SetTile(new Vector3Int(x, y, 0),
-                            _defaultMap.WallTiles[Random.Range(0, _defaultMap.WallTiles.Count)]);
-                    }
-                    //Else, random chance at adding decoration.
-                    else
-                    {
-                        if (Random.value < _defaultMap.DecorationChance)
-                            _decorationLayer.SetTile(new Vector3Int(x, y, 0),
-                                _defaultMap.DecorationTiles[Random.Range(0, _defaultMap.DecorationTiles.Count)]);
-
-                        if (Random.value < _defaultMap.ObjectChance)
-                            _objectLayer.SetTile(new Vector3Int(x, y, 0),
-                                _defaultMap.ObjectTiles[Random.Range(0, _defaultMap.ObjectTiles.Count)]);
-                    }
-
-                    _baseLayer.SetTile(new Vector3Int(x, y, 0), _defaultMap.FloorTiles[0]);
-                }
         }
     }
 }

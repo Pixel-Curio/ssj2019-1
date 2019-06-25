@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e64df02589464614287c82c126c2e29d, type: 3}
   m_Name: ExampleMap
   m_EditorClassIdentifier: 
-  Dimensions: {x: 25, y: 16}
+  MaxMapSize: {x: 64, y: 64}
+  MinRoomSize: {x: 5, y: 5}
+  MaxRoomSize: {x: 15, y: 15}
+  MaxRoomCount: 30
+  MaxFailedRoomCount: 500
   DecorationChance: 0.03
-  ObjectChance: 0.03
+  ObjectChance: 0.02
+  MapSeed: 0
   WallTiles:
   - {fileID: 11400000, guid: ff521b3ba03991e429759f550320aee2, type: 2}
   - {fileID: 11400000, guid: eab4291761147ad489fdb66fc8a31309, type: 2}
