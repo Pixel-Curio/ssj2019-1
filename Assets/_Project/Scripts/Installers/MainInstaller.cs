@@ -6,7 +6,6 @@ namespace PixelCurio.OccultClassic
     public class MainInstaller : MonoInstaller
     {
         [SerializeField] private Map _defaultMap;
-        [SerializeField] private GameObject _destructablePrefab;
         [SerializeField] private GameObject _lightExplosion;
         [SerializeField] private GameObject _basicBullet;
 
