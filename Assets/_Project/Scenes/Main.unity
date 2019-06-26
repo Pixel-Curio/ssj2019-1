@@ -556,6 +556,8 @@ MonoBehaviour:
   _defaultMap: {fileID: 11400000, guid: 1190d1af522f93049a1e328550689952, type: 2}
   _destructablePrefab: {fileID: 1574996950693066448, guid: 505ae0ca42c0f984f95e764d8e9555f6,
     type: 3}
+  _lightExplosion: {fileID: 6657661858393788678, guid: d3f6fcc2ab77e7341b369d9a3cb2f590,
+    type: 3}
 --- !u!114 &456455091
 MonoBehaviour:
   m_ObjectHideFlags: 0

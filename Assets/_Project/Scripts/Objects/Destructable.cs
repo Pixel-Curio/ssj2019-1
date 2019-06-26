@@ -11,12 +11,14 @@ namespace PixelCurio.OccultClassic
         private bool _destroy;
 
         [Inject(Id = "ObjectLayer")] private readonly Tilemap _objectLayer;
+        [Inject(Id = "LightExplosion")] private readonly PlaceableEffect.Pool _effectPool;
 
         public void Update()
         {
             if (_destroy)
             {
                 Destroy(gameObject);
+                _effectPool.Spawn(transform.position);
                 _objectLayer.SetTile(_location, null);
             }
         }
