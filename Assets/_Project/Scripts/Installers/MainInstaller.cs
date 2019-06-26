@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using Zenject;
 
 namespace PixelCurio.OccultClassic
@@ -7,6 +6,7 @@ namespace PixelCurio.OccultClassic
     public class MainInstaller : MonoInstaller
     {
         [SerializeField] private Map _defaultMap;
+        [SerializeField] private GameObject _destructablePrefab;
 
         public override void InstallBindings()
         {
