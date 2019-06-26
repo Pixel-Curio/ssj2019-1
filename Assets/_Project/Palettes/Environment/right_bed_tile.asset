@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: right_bed_tile
   m_EditorClassIdentifier: 
   Sprite: {fileID: -5095401777658053049, guid: 4b76fad63e300734bb669a668a67e682, type: 3}
-  Prefab: {fileID: 6856786941663706103, guid: 8300ba387bfd52448bab37d4e45a3b95, type: 3}
+  Prefab: {fileID: 1574996950693066448, guid: 505ae0ca42c0f984f95e764d8e9555f6, type: 3}
