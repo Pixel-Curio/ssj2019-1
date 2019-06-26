@@ -6,13 +6,8 @@ namespace PixelCurio.OccultClassic
     [RequireComponent(typeof(ParticleSystem))]
     public class PlaceableEffect : MonoBehaviour
     {
-        private ParticleSystem _particleSystem;
+        [SerializeField] private ParticleSystem _particleSystem;
         private Pool _pool;
-
-        private void OnEnable()
-        {
-            if (!_particleSystem) _particleSystem = GetComponent<ParticleSystem>();
-        }
 
         public void OnParticleSystemStopped()
         {

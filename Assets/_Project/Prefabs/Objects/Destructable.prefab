@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _destructionLayers:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 98304
 --- !u!50 &3412147181507271167
 Rigidbody2D:
   serializedVersion: 4

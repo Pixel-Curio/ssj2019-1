@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace PixelCurio.OccultClassic
 {
@@ -7,6 +8,7 @@ namespace PixelCurio.OccultClassic
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Animator _animator;
         [SerializeField] private Vector2 _movementSpeed;
+        [Inject] private BasicBullet.Pool _basicBulletPool;
 
         private void FixedUpdate()
         {
@@ -16,8 +18,9 @@ namespace PixelCurio.OccultClassic
             if (Input.GetKey(KeyCode.D)) offset += Vector2.right;
             if (Input.GetKey(KeyCode.W)) offset += Vector2.up;
             if (Input.GetKey(KeyCode.S)) offset += Vector2.down;
+            if (Input.GetKeyDown(KeyCode.Space)) _basicBulletPool.Spawn(transform.position, Vector3.right);
 
-            offset = offset.normalized * _movementSpeed;
+                offset = offset.normalized * _movementSpeed;
 
             _rigidbody.MovePosition(_rigidbody.position + offset * Time.fixedDeltaTime);
 

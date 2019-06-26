@@ -558,6 +558,8 @@ MonoBehaviour:
     type: 3}
   _lightExplosion: {fileID: 6657661858393788678, guid: d3f6fcc2ab77e7341b369d9a3cb2f590,
     type: 3}
+  _basicBullet: {fileID: 8966556948435009833, guid: c4046b7f9eb1e4d4fabddbf4439599fa,
+    type: 3}
 --- !u!114 &456455091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,21 +1378,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Explorer
-      objectReference: {fileID: 0}
-    - target: {fileID: 6964109463376155795, guid: d43f95893b080154cac45f3543397301,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 6964109463376155795, guid: d43f95893b080154cac45f3543397301,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 6964109463376155795, guid: d43f95893b080154cac45f3543397301,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: -0.12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d43f95893b080154cac45f3543397301, type: 3}
