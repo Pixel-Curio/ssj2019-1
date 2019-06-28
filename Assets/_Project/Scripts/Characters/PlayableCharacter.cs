@@ -9,7 +9,7 @@ namespace PixelCurio.OccultClassic
         [SerializeField] private Animator _animator;
         [SerializeField] private Vector2 _movementSpeed;
         [Inject] private BasicBullet.Pool _basicBulletPool;
-        private Vector2 _lastOffset;
+        private Vector2 _lastOffset = Vector2.down;
 
         private void FixedUpdate()
         {
@@ -20,9 +20,10 @@ namespace PixelCurio.OccultClassic
             if (Input.GetKey(KeyCode.W)) offset += Vector2.up;
             if (Input.GetKey(KeyCode.S)) offset += Vector2.down;
             if (offset != Vector2.zero) _lastOffset = offset;
+
             if (Input.GetKeyDown(KeyCode.Space)) FireWeapon(_lastOffset);
 
-                offset = offset.normalized * _movementSpeed;
+            offset = offset.normalized * _movementSpeed;
 
             _rigidbody.MovePosition(_rigidbody.position + offset * Time.fixedDeltaTime);
 

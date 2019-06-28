@@ -15,18 +15,15 @@ namespace PixelCurio.OccultClassic
 
         public void Update()
         {
-            if (_destroy)
-            {
-                Destroy(gameObject);
-                _effectPool.Spawn(transform.position);
-                _objectLayer.SetTile(_location, null);
-            }
+            if (!_destroy) return;
+
+            Destroy(gameObject);
+            _effectPool.Spawn(transform.position);
+            _objectLayer.SetTile(_location, null);
+
         }
 
-        public void SetTileDependencies(Vector3Int location)
-        {
-            _location = location;
-        }
+        public void SetTileDependencies(Vector3Int location) => _location = location;
 
         public void OnCollisionEnter2D(Collision2D col)
         {

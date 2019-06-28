@@ -385,7 +385,7 @@ GameObject:
   - component: {fileID: 332369562}
   - component: {fileID: 332369561}
   - component: {fileID: 332369560}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: ObjectLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +433,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 332369558}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e5412f10f06696043a88d9f9be297d2d, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -554,8 +554,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultMap: {fileID: 11400000, guid: 1190d1af522f93049a1e328550689952, type: 2}
-  _destructablePrefab: {fileID: 1574996950693066448, guid: 505ae0ca42c0f984f95e764d8e9555f6,
-    type: 3}
   _lightExplosion: {fileID: 6657661858393788678, guid: d3f6fcc2ab77e7341b369d9a3cb2f590,
     type: 3}
   _basicBullet: {fileID: 8966556948435009833, guid: c4046b7f9eb1e4d4fabddbf4439599fa,
@@ -926,7 +924,7 @@ GameObject:
   - component: {fileID: 1352976023}
   - component: {fileID: 1352976028}
   - component: {fileID: 1352976027}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: WallLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
