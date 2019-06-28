@@ -31,8 +31,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a65f5c2c1722f6f42bdec6d67fb06893, type: 2}
   ObjectTiles:
   - {fileID: 11400000, guid: 554d0998ed77fd74e96ecba3b373abec, type: 2}
-  - {fileID: 11400000, guid: c03f60bcd177f6e4397c34451e372d3c, type: 2}
-  - {fileID: 11400000, guid: d400a4fb97a42ca4f9f73f943aac54af, type: 2}
-  - {fileID: 11400000, guid: bd936df43cba45a43a041c7f57ff5eb3, type: 2}
-  - {fileID: 11400000, guid: 8775d56f094865e4788415be227afff0, type: 2}
-  - {fileID: 11400000, guid: 4a149d0b29a2b914a99e4ca9ee3a6860, type: 2}
+  - {fileID: 11400000, guid: 667f3304d217e084fbecfe7a1badc2da, type: 2}
+  - {fileID: 11400000, guid: d72551640060f9146b77e02fa5814ea3, type: 2}
+  - {fileID: 11400000, guid: 3967ce6184287f44cab082b497b5cb6e, type: 2}
+  - {fileID: 11400000, guid: a8755b80ae3733c4895d488a135386d1, type: 2}
+  - {fileID: 11400000, guid: f7777a9b3ac0482419916820e359d573, type: 2}
