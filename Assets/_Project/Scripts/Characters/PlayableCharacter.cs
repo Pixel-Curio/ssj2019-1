@@ -8,7 +8,7 @@ namespace PixelCurio.OccultClassic
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Animator _animator;
         [SerializeField] private Vector2 _movementSpeed;
-        [Inject] private BasicBullet.Pool _basicBulletPool;
+        [Inject] private readonly IGun _gun;
         private Vector2 _lastOffset = Vector2.down;
 
         private void FixedUpdate()
@@ -21,7 +21,7 @@ namespace PixelCurio.OccultClassic
             if (Input.GetKey(KeyCode.S)) offset += Vector2.down;
             if (offset != Vector2.zero) _lastOffset = offset;
 
-            if (Input.GetKeyDown(KeyCode.Space)) FireWeapon(_lastOffset);
+            if (Input.GetKey(KeyCode.Space)) FireWeapon(_lastOffset);
 
             offset = offset.normalized * _movementSpeed;
 
@@ -33,7 +33,7 @@ namespace PixelCurio.OccultClassic
 
         private void FireWeapon(Vector2 direction)
         {
-            _basicBulletPool.Spawn(transform.position, direction);
+            _gun.Fire(transform.position, direction);
         }
     }
 }

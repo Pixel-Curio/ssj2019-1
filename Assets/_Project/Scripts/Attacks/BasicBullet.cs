@@ -30,7 +30,6 @@ namespace PixelCurio.OccultClassic
 
         public void OnCollisionEnter2D(Collision2D col) => Kill();
         
-
         public class Pool : MonoMemoryPool<Vector3, Vector3, BasicBullet>
         {
             protected override void Reinitialize(Vector3 position, Vector3 direction, BasicBullet bullet)
