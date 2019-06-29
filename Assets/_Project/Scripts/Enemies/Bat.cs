@@ -8,7 +8,13 @@ namespace PixelCurio.OccultClassic
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Animator _animator;
         [SerializeField] private Vector2 _movementSpeed;
+        [SerializeField] private Bar _healthBar;
         [Inject] private PlayableCharacter _target;
+
+        private void Awake()
+        {
+            _healthBar.SetWidth(10);
+        }
 
         private void FixedUpdate()
         {
