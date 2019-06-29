@@ -28,8 +28,13 @@ namespace PixelCurio.OccultClassic
 
         private void Kill() => _pool.Despawn(this);
 
-        public void OnCollisionEnter2D(Collision2D col) => Kill();
-        
+        public void OnCollisionEnter2D(Collision2D col)
+        {
+            IDamagable target = col.gameObject.GetComponent<IDamagable>();
+            target?.ReceiveDamage(1);
+            Kill();
+        }
+
         public class Pool : MonoMemoryPool<Vector3, Vector3, BasicBullet>
         {
             protected override void Reinitialize(Vector3 position, Vector3 direction, BasicBullet bullet)

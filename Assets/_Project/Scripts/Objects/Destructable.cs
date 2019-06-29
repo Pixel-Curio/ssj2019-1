@@ -4,7 +4,7 @@ using Zenject;
 
 namespace PixelCurio.OccultClassic
 {
-    public class Destructable : MonoBehaviour, ITileConnection
+    public class Destructable : MonoBehaviour, ITileConnection, IDamagable
     {
         [SerializeField] private LayerMask _destructionLayers;
         private Vector3Int _location;
@@ -25,12 +25,9 @@ namespace PixelCurio.OccultClassic
 
         public void SetTileDependencies(Vector3Int location) => _location = location;
 
-        public void OnCollisionEnter2D(Collision2D col)
+        public void ReceiveDamage(float damage)
         {
-            if (_destructionLayers == (_destructionLayers | (1 << col.gameObject.layer)))
-            {
-                _destroy = true;
-            }
+            _destroy = true;
         }
     }
 }
