@@ -6,14 +6,16 @@ namespace PixelCurio.OccultClassic
     public class MainInstaller : MonoInstaller
     {
         [SerializeField] private Map _defaultMap;
-        [SerializeField] private GameObject _lightExplosion;
-        [SerializeField] private GameObject _basicBullet;
+        [SerializeField] private GameObject _lightExplosionPrefab;
+        [SerializeField] private GameObject _basicBulletPrefab;
+        [SerializeField] private GameObject _batPrefab;
 
         public override void InstallBindings()
         {
             InstallMaps();
             InstallWeapons();
             InstallEffects();
+            InstallEnemies();
         }
 
         private void InstallEffects()
@@ -21,7 +23,7 @@ namespace PixelCurio.OccultClassic
             Container.BindMemoryPool<PlaceableEffect, PlaceableEffect.Pool>()
                 .WithId("LightExplosion")
                 .WithInitialSize(2)
-                .FromComponentInNewPrefab(_lightExplosion)
+                .FromComponentInNewPrefab(_lightExplosionPrefab)
                 .UnderTransformGroup("Effects");
         }
 
@@ -36,8 +38,16 @@ namespace PixelCurio.OccultClassic
             Container.Bind(typeof(ITickable), typeof(IGun)).To<BasicGun>().AsSingle();
             Container.BindMemoryPool<BasicBullet, BasicBullet.Pool>()
                 .WithInitialSize(5)
-                .FromComponentInNewPrefab(_basicBullet)
+                .FromComponentInNewPrefab(_basicBulletPrefab)
                 .UnderTransformGroup("Projectiles");
+        }
+
+        private void InstallEnemies()
+        {
+            Container.BindMemoryPool<Bat, Bat.Pool>()
+                .WithInitialSize(5)
+                .FromComponentInNewPrefab(_batPrefab)
+                .UnderTransformGroup("Enemies");
         }
     }
 }

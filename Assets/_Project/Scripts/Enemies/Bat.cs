@@ -3,7 +3,7 @@ using Zenject;
 
 namespace PixelCurio.OccultClassic
 {
-    public class Bat : MonoBehaviour, IDamagable
+    public class Bat : MonoBehaviour, ITileConnection, IDamagable
     {
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Animator _animator;
@@ -14,7 +14,9 @@ namespace PixelCurio.OccultClassic
 
         [Inject] private PlayableCharacter _target;
 
+        private Vector3Int _location;
         private float _health;
+        private Pool _pool;
 
         private void Awake()
         {
@@ -38,7 +40,26 @@ namespace PixelCurio.OccultClassic
         public void ReceiveDamage(float damage)
         {
             _health -= damage;
+            if(_health <= 0) _pool.Despawn(this);
             UpdateHealthBar();
         }
+
+        private void Reset(Vector3 position, Pool pool)
+        {
+            transform.position = position;
+            _health = _maxHealth;
+            _pool = pool;
+            UpdateHealthBar();
+        }
+
+        public class Pool : MonoMemoryPool<Vector3, Bat>
+        {
+            protected override void Reinitialize(Vector3 position, Bat bullet)
+            {
+                bullet.Reset(position, this);
+            }
+        }
+
+        public void SetTileDependencies(Vector3Int location) => _location = location;
     }
 }

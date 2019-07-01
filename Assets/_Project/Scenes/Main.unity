@@ -712,9 +712,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultMap: {fileID: 11400000, guid: 1190d1af522f93049a1e328550689952, type: 2}
-  _lightExplosion: {fileID: 6657661858393788678, guid: d3f6fcc2ab77e7341b369d9a3cb2f590,
+  _lightExplosionPrefab: {fileID: 6657661858393788678, guid: d3f6fcc2ab77e7341b369d9a3cb2f590,
     type: 3}
-  _basicBullet: {fileID: 8966556948435009833, guid: c4046b7f9eb1e4d4fabddbf4439599fa,
+  _basicBulletPrefab: {fileID: 8966556948435009833, guid: c4046b7f9eb1e4d4fabddbf4439599fa,
+    type: 3}
+  _batPrefab: {fileID: 6856786941663706103, guid: 8300ba387bfd52448bab37d4e45a3b95,
     type: 3}
 --- !u!114 &456455091
 MonoBehaviour:
