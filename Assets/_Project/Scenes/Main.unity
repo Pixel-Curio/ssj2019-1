@@ -535,7 +535,7 @@ GameObject:
   - component: {fileID: 426342235}
   - component: {fileID: 426342234}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: LoadingText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -717,6 +717,8 @@ MonoBehaviour:
   _basicBulletPrefab: {fileID: 8966556948435009833, guid: c4046b7f9eb1e4d4fabddbf4439599fa,
     type: 3}
   _batPrefab: {fileID: 6856786941663706103, guid: 8300ba387bfd52448bab37d4e45a3b95,
+    type: 3}
+  _monobehaviourEntryPrefab: {fileID: 215529140682158522, guid: ae56ac1fd9a1f9a408feda6722ce5413,
     type: 3}
 --- !u!114 &456455091
 MonoBehaviour:
@@ -1731,6 +1733,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bat
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856786941663706103, guid: 8300ba387bfd52448bab37d4e45a3b95,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3831846522530589122, guid: 8300ba387bfd52448bab37d4e45a3b95,
         type: 3}

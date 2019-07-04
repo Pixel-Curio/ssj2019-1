@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace PixelCurio.OccultClassic
         [Inject(Id = "DecorationLayer")] private readonly Tilemap _decorationLayer;
         [Inject(Id = "ObjectLayer")] private readonly Tilemap _objectLayer;
         [Inject(Id = "DefaultMap")] private readonly Map _defaultMap;
+        [Inject] private readonly MonobehaviourEntry _entry;
 
         private struct Room { public int X, Y, Width, Height; }
 
@@ -28,11 +30,13 @@ namespace PixelCurio.OccultClassic
         {
             Debug.Log("MapBuilder initializing.");
 
-            AStarMap();
+            _entry.StartChildCoroutine(AStarMap());
         }
 
-        private void AStarMap()
+        private IEnumerator AStarMap()
         {
+            yield return new WaitForSeconds(0.1f);
+
             Vector2 maxMapSize = _defaultMap.MaxMapSize;
             Vector2 minRoomSize = _defaultMap.MinRoomSize;
             Vector2 maxRoomSize = _defaultMap.MaxRoomSize;

@@ -9,6 +9,7 @@ namespace PixelCurio.OccultClassic
         [SerializeField] private GameObject _lightExplosionPrefab;
         [SerializeField] private GameObject _basicBulletPrefab;
         [SerializeField] private GameObject _batPrefab;
+        [SerializeField] private GameObject _monobehaviourEntryPrefab;
 
         public override void InstallBindings()
         {
@@ -16,6 +17,7 @@ namespace PixelCurio.OccultClassic
             InstallWeapons();
             InstallEffects();
             InstallEnemies();
+            InstallMisc();
         }
 
         private void InstallEffects()
@@ -48,6 +50,11 @@ namespace PixelCurio.OccultClassic
                 .WithInitialSize(5)
                 .FromComponentInNewPrefab(_batPrefab)
                 .UnderTransformGroup("Enemies");
+        }
+
+        private void InstallMisc()
+        {
+            Container.Bind<MonobehaviourEntry>().FromComponentInNewPrefab(_monobehaviourEntryPrefab).AsSingle();
         }
     }
 }
