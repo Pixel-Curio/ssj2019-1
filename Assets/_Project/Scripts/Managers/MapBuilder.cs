@@ -16,6 +16,8 @@ namespace PixelCurio.OccultClassic
         [Inject(Id = "DecorationLayer")] private readonly Tilemap _decorationLayer;
         [Inject(Id = "ObjectLayer")] private readonly Tilemap _objectLayer;
         [Inject(Id = "DefaultMap")] private readonly Map _defaultMap;
+
+        [Inject] private readonly ScreenUiController _screenUiController;
         [Inject] private readonly MonobehaviourEntry _entry;
 
         private struct Room { public int X, Y, Width, Height; }
@@ -35,8 +37,6 @@ namespace PixelCurio.OccultClassic
 
         private IEnumerator AStarMap()
         {
-            yield return new WaitForSeconds(0.1f);
-
             Vector2 maxMapSize = _defaultMap.MaxMapSize;
             Vector2 minRoomSize = _defaultMap.MinRoomSize;
             Vector2 maxRoomSize = _defaultMap.MaxRoomSize;
@@ -49,12 +49,15 @@ namespace PixelCurio.OccultClassic
             int seed = Random.Range(0, int.MaxValue);
             if(_defaultMap.MapSeed != 0) seed = _defaultMap.MapSeed;
             Random.InitState(seed);
-            Debug.Log($"Dungeon seed: {seed}");
+            _screenUiController.SetLoadingText($"Using dungeon seed ({seed})");
+            yield return new WaitForSeconds(0.1f);
 
-            //Add first room.
+            _screenUiController.SetLoadingText("Adding first room...");
+            yield return new WaitForSeconds(0.1f);
             rooms.Add(new Room { X = 1, Y = 1, Width = Random.Range(1, (int)maxRoomSize.x), Height = Random.Range(1, (int)maxRoomSize.y) });
 
-            //Generate non-overlapping rooms.
+            _screenUiController.SetLoadingText("Generating non-overlapping rooms...");
+            yield return new WaitForSeconds(0.1f);
             while (rooms.Count < maxRoomCount && failedRoomCount < maxFailedRoomCount)
             {
                 Room room = new Room
@@ -92,7 +95,8 @@ namespace PixelCurio.OccultClassic
 
             int[,] map = new int[(int)maxMapSize.x, (int)maxMapSize.y];
 
-            //Add rooms to map.
+            _screenUiController.SetLoadingText("Adding rooms to map...");
+            yield return new WaitForSeconds(0.1f);
             foreach (Room room in rooms)
             {
                 for (int y = 0; y < room.Height; y++)
@@ -102,13 +106,15 @@ namespace PixelCurio.OccultClassic
                     }
             }
 
-            //Create paths between rooms.
+            _screenUiController.SetLoadingText("Creating paths between rooms...");
+            yield return new WaitForSeconds(0.1f);
             foreach (Room room in rooms)
             {
                 map = CreatePath(map, room, rooms[Random.Range(0, rooms.Count)]);
             }
 
-            //Remove unnecessary walls.
+            _screenUiController.SetLoadingText("Removing unnecessary walls...");
+            yield return new WaitForSeconds(0.1f);
             for (int y = 0; y < maxMapSize.y; y++)
                 for (int x = 0; x < maxMapSize.x; x++)
                 {
@@ -119,6 +125,8 @@ namespace PixelCurio.OccultClassic
                         map[x, y] = 1;
                 }
 
+            _screenUiController.SetLoadingText("Setting tiles...");
+            yield return new WaitForSeconds(0.1f);
             for (int y = 0; y < maxMapSize.y; y++)
                 for (int x = 0; x < maxMapSize.x; x++)
                 {
@@ -142,6 +150,7 @@ namespace PixelCurio.OccultClassic
                     }
                 }
 
+            _screenUiController.SetLoadingText("");
         }
 
         private static bool IsWall(int[,] map, int x, int y)
