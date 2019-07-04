@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: bat_spawner_tile
   m_EditorClassIdentifier: Assembly-CSharp:PixelCurio.OccultClassic:SpwanerTile
   _sprite: {fileID: 0}
+  _enemyType: 0

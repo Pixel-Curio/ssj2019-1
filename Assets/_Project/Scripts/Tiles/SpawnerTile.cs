@@ -36,10 +36,7 @@ namespace PixelCurio.OccultClassic
 
         public override bool StartUp(Vector3Int location, ITilemap tilemap, GameObject gameObject)
         {
-            Context.Container.InjectGameObject(gameObject);
             Context.Container.Inject(this);
-            ITileConnection tileConnection = (ITileConnection)gameObject.GetComponent(typeof(ITileConnection));
-            tileConnection?.SetTileDependencies(location);
 
             switch (_enemyType)
             {

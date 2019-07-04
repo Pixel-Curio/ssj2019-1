@@ -3,7 +3,7 @@ using Zenject;
 
 namespace PixelCurio.OccultClassic
 {
-    public class Bat : MonoBehaviour, ITileConnection, IDamagable
+    public class Bat : MonoBehaviour, IDamagable
     {
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Animator _animator;
@@ -13,8 +13,7 @@ namespace PixelCurio.OccultClassic
         [SerializeField] private float _healthBarWidth = 10;
 
         [Inject] private PlayableCharacter _target;
-
-        private Vector3Int _location;
+        
         private float _health;
         private Pool _pool;
 
@@ -59,7 +58,5 @@ namespace PixelCurio.OccultClassic
                 bullet.Reset(position, this);
             }
         }
-
-        public void SetTileDependencies(Vector3Int location) => _location = location;
     }
 }
