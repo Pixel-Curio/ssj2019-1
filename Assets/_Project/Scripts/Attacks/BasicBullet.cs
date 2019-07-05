@@ -11,6 +11,7 @@ namespace PixelCurio.OccultClassic
         private Vector2 _direction;
         private Pool _pool;
         private float _timeAlive;
+        private bool _isDespawning;
 
         public void FixedUpdate()
         {
@@ -24,9 +25,16 @@ namespace PixelCurio.OccultClassic
             _timeAlive = 0;
             _direction = direction;
             _pool = pool;
+            _isDespawning = false;
         }
 
-        private void Kill() => _pool.Despawn(this);
+        private void Kill()
+        {
+            if(_isDespawning) return;
+
+            _isDespawning = true;
+            _pool.Despawn(this);
+        }
 
         public void OnCollisionEnter2D(Collision2D col)
         {

@@ -13,7 +13,8 @@ namespace PixelCurio.OccultClassic
         [SerializeField] private float _healthBarWidth = 10;
 
         [Inject] private PlayableCharacter _target;
-        
+        [Inject(Id = "LightExplosion")] private readonly PlaceableEffect.Pool _effectPool;
+
         private float _health;
         private Pool _pool;
 
@@ -39,8 +40,12 @@ namespace PixelCurio.OccultClassic
         public void ReceiveDamage(float damage)
         {
             _health -= damage;
-            if(_health <= 0) _pool.Despawn(this);
             UpdateHealthBar();
+
+            if (_health > 0) return;
+
+            _effectPool.Spawn(transform.position);
+            _pool.Despawn(this);
         }
 
         private void Reset(Vector3 position, Pool pool)
