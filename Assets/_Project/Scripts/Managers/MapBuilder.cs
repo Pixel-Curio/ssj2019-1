@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
@@ -47,7 +46,7 @@ namespace PixelCurio.OccultClassic
 
             //Use provided seed if it exists.
             int seed = Random.Range(0, int.MaxValue);
-            if(_defaultMap.MapSeed != 0) seed = _defaultMap.MapSeed;
+            if (_defaultMap.MapSeed != 0) seed = _defaultMap.MapSeed;
             Random.InitState(seed);
             _screenUiController.SetLoadingText($"Using dungeon seed ({seed})");
             yield return new WaitForSeconds(0.1f);
@@ -181,8 +180,19 @@ namespace PixelCurio.OccultClassic
             while (openList.Count > 0)
             {
                 // get the square with the lowest F score
-                int lowest = openList.Min(l => l.F);
-                List<Location> viableLocations = openList.Where(l => l.F == lowest).ToList();
+                //int lowest = openList.Min(l => l.F);
+                int lowest = openList[0].F;
+                for (int i = 0; i < openList.Count; i++)
+                    if (openList[i].F < lowest)
+                        lowest = openList[i].F;
+
+                //List<Location> viableLocations = openList.Where(l => l.F == lowest).ToList();
+                List<Location> viableLocations = new List<Location>();
+                for (int i = 0; i < openList.Count; i++)
+                    if (openList[i].F == lowest)
+                        viableLocations.Add(openList[i]);
+
+
                 current = viableLocations[Random.Range(0, viableLocations.Count)];
 
                 // add the current square to the closed list
@@ -192,7 +202,12 @@ namespace PixelCurio.OccultClassic
                 openList.Remove(current);
 
                 // if we added the destination to the closed list, we've found a path
-                if (closedList.FirstOrDefault(l => l.X == target.X && l.Y == target.Y) != null)
+                //if (closedList.FirstOrDefault(l => l.X == target.X && l.Y == target.Y) != null)
+                //{
+                //    pathFound = true;
+                //    break;
+                //}
+                if (current.X == target.X && current.Y == target.Y)
                 {
                     pathFound = true;
                     break;
@@ -204,13 +219,34 @@ namespace PixelCurio.OccultClassic
                 foreach (Location adjacentSquare in adjacentSquares)
                 {
                     // if this adjacent square is already in the closed list, ignore it
-                    if (closedList.FirstOrDefault(l => l.X == adjacentSquare.X
-                                                       && l.Y == adjacentSquare.Y) != null)
-                        continue;
+                    //if (closedList.FirstOrDefault(l => l.X == adjacentSquare.X
+                    //                                   && l.Y == adjacentSquare.Y) != null)
+                    //    continue;
+                    bool isClosed = false;
+                    for (int i = 0; i < closedList.Count; i++)
+                    {
+                        if (closedList[i].X == adjacentSquare.X && closedList[i].Y == adjacentSquare.Y)
+                        {
+                            isClosed = true;
+                            break;
+                        }
+                    }
+                    if (isClosed) continue;
+
+                    bool isOpen = false;
+                    for (int i = 0; i < openList.Count; i++)
+                    {
+                        if (openList[i].X == adjacentSquare.X && openList[i].Y == adjacentSquare.Y)
+                        {
+                            isOpen = true;
+                            break;
+                        }
+                    }
 
                     // if it's not in the open list...
-                    if (openList.FirstOrDefault(l => l.X == adjacentSquare.X
-                                                     && l.Y == adjacentSquare.Y) == null)
+                    //if (openList.FirstOrDefault(l => l.X == adjacentSquare.X
+                    //                                 && l.Y == adjacentSquare.Y) == null)
+                    if (!isOpen)
                     {
                         // compute its score, set the parent
                         adjacentSquare.G = g;
@@ -256,15 +292,24 @@ namespace PixelCurio.OccultClassic
 
         private static List<Location> GetWalkableAdjacentSquares(int x, int y, int[,] map)
         {
-            var proposedLocations = new List<Location>()
-            {
-                new Location { X = x, Y = y - 1 },
-                new Location { X = x, Y = y + 1 },
-                new Location { X = x - 1, Y = y },
-                new Location { X = x + 1, Y = y },
-            };
+            //var proposedLocations = new List<Location>
+            //{
+            //    new Location { X = x, Y = y - 1 },
+            //    new Location { X = x, Y = y + 1 },
+            //    new Location { X = x - 1, Y = y },
+            //    new Location { X = x + 1, Y = y },
+            //};
 
-            return proposedLocations.Where(l => l.X < map.GetLength(0) && l.X >= 0 && l.Y < map.GetLength(1) && l.Y >= 0).ToList();
+            //return proposedLocations.Where(l => l.X < map.GetLength(0) && l.X >= 0 && l.Y < map.GetLength(1) && l.Y >= 0).ToList();
+
+            List<Location> proposedLocations = new List<Location>();
+
+            if (y - 1 >= 0) proposedLocations.Add(new Location { X = x, Y = y - 1 });
+            if (y + 1 < map.GetLength(1)) proposedLocations.Add(new Location { X = x, Y = y + 1 });
+            if (x - 1 >= 0) proposedLocations.Add(new Location { X = x - 1, Y = y });
+            if (x + 1 < map.GetLength(0)) proposedLocations.Add(new Location { X = x + 1, Y = y });
+
+            return proposedLocations;
         }
 
         private bool RoomsOverlap(Room room1, Room room2)
