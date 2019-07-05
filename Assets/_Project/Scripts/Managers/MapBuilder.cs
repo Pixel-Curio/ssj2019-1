@@ -180,13 +180,11 @@ namespace PixelCurio.OccultClassic
             while (openList.Count > 0)
             {
                 // get the square with the lowest F score
-                //int lowest = openList.Min(l => l.F);
                 int lowest = openList[0].F;
                 for (int i = 0; i < openList.Count; i++)
                     if (openList[i].F < lowest)
                         lowest = openList[i].F;
 
-                //List<Location> viableLocations = openList.Where(l => l.F == lowest).ToList();
                 List<Location> viableLocations = new List<Location>();
                 for (int i = 0; i < openList.Count; i++)
                     if (openList[i].F == lowest)
@@ -202,11 +200,6 @@ namespace PixelCurio.OccultClassic
                 openList.Remove(current);
 
                 // if we added the destination to the closed list, we've found a path
-                //if (closedList.FirstOrDefault(l => l.X == target.X && l.Y == target.Y) != null)
-                //{
-                //    pathFound = true;
-                //    break;
-                //}
                 if (current.X == target.X && current.Y == target.Y)
                 {
                     pathFound = true;
@@ -219,9 +212,6 @@ namespace PixelCurio.OccultClassic
                 foreach (Location adjacentSquare in adjacentSquares)
                 {
                     // if this adjacent square is already in the closed list, ignore it
-                    //if (closedList.FirstOrDefault(l => l.X == adjacentSquare.X
-                    //                                   && l.Y == adjacentSquare.Y) != null)
-                    //    continue;
                     bool isClosed = false;
                     for (int i = 0; i < closedList.Count; i++)
                     {
@@ -244,8 +234,6 @@ namespace PixelCurio.OccultClassic
                     }
 
                     // if it's not in the open list...
-                    //if (openList.FirstOrDefault(l => l.X == adjacentSquare.X
-                    //                                 && l.Y == adjacentSquare.Y) == null)
                     if (!isOpen)
                     {
                         // compute its score, set the parent
@@ -292,16 +280,6 @@ namespace PixelCurio.OccultClassic
 
         private static List<Location> GetWalkableAdjacentSquares(int x, int y, int[,] map)
         {
-            //var proposedLocations = new List<Location>
-            //{
-            //    new Location { X = x, Y = y - 1 },
-            //    new Location { X = x, Y = y + 1 },
-            //    new Location { X = x - 1, Y = y },
-            //    new Location { X = x + 1, Y = y },
-            //};
-
-            //return proposedLocations.Where(l => l.X < map.GetLength(0) && l.X >= 0 && l.Y < map.GetLength(1) && l.Y >= 0).ToList();
-
             List<Location> proposedLocations = new List<Location>();
 
             if (y - 1 >= 0) proposedLocations.Add(new Location { X = x, Y = y - 1 });
